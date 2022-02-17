@@ -14,7 +14,7 @@ const data =
        отличными камерами, ни в чем себя не ограничивать при запуске игр и других
         требовательных приложений.`,
     'category': 'Мобильные телефоны',
-    'discont': 20, // false,
+    'discont': false,
     'count': 3,
     'units': 'шт',
     'images': {
@@ -63,7 +63,7 @@ const data =
         развертывание локальной сети в домашних условиях или на предприятии, объединить все
          необходимое вам оборудование в единую сеть.`,
     'category': 'Кабели',
-    'discont': 10, // false,
+    'discont': false,
     'count': 420,
     'units': 'v',
     'images': {
@@ -82,8 +82,10 @@ const tableBody = document.querySelector('.table__body');
 
 toggleModal.classList.remove('active');
 
-const createRow = ({id: iden, title, category, units, count, price}) => {
+const createRow = ({id: iden, title, category, units, count, price, discont}) => {
   const tr = document.createElement('tr');
+
+  const tddiscont = discont;
 
   const tdID = document.createElement('td');
   tdID.classList.add('table__cell');
@@ -111,7 +113,7 @@ const createRow = ({id: iden, title, category, units, count, price}) => {
 
   const tdTotalPrice = document.createElement('td');
   tdTotalPrice.classList.add('table__cell');
-  tdTotalPrice.textContent = '$' + price * count;
+  tdTotalPrice.textContent = '$' + ((price * count) - (price * count * tddiscont / 100));
 
   const tdButton = document.createElement('td');
   tdButton.classList.add('table__cell', 'table__cell_btn-wrapper');
