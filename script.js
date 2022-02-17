@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 'use strict';
 
-const prods =
+const data =
 [
   {
     'id': 253842678,
@@ -13,8 +13,8 @@ const prods =
       позиционированию, предоставляя своим обладателям возможность пользоваться
        отличными камерами, ни в чем себя не ограничивать при запуске игр и других
         требовательных приложений.`,
-    'category': 'mobile-phone',
-    'discont': false,
+    'category': 'Мобильные телефоны',
+    'discont': 20, // false,
     'count': 3,
     'units': 'шт',
     'images': {
@@ -27,7 +27,7 @@ const prods =
     'title': 'Радиоуправляемый автомобиль Cheetan',
     'price': 4000,
     'description': 'Внедорожник на дистанционном управлении. Скорость 25км/ч. Возраст 7 - 14 лет',
-    'category': 'toys',
+    'category': 'Игрушки',
     'discont': 5,
     'count': 1,
     'units': 'шт',
@@ -43,7 +43,7 @@ const prods =
     'description': `Всего лишь один шаг сделает ваш телевизор умным, Быстрый и умный MECOOL
      KI PRO, прекрасно спроектированный, сочетает в себе прочный процессор Cortex-A53 с чипом
       Amlogic S905D'`,
-    'category': 'tv-box',
+    'category': 'ТВ приставки',
     'discont': 15,
     'count': 4,
     'units': 'шт',
@@ -62,8 +62,8 @@ const prods =
        широко применяется в процессе сетевых монтажных работ. С ее помощью вы сможете обеспечить
         развертывание локальной сети в домашних условиях или на предприятии, объединить все
          необходимое вам оборудование в единую сеть.`,
-    'category': 'cables',
-    'discont': false,
+    'category': 'Кабели',
+    'discont': 10, // false,
     'count': 420,
     'units': 'v',
     'images': {
@@ -73,31 +73,65 @@ const prods =
   },
 ];
 
-const obj = [1, 2, 3, 4, 5, 6];
 const mainModalTitle = document.querySelector('.modal__title');
 const mainModalForm = document.querySelector('.modal__form');
 const modalCheckBox = document.querySelector('.modal__checkbox');
 const modalInputCheckBox = document.querySelector('.modal__input_discount');
 const toggleModal = document.querySelector('.overlay');
-const tableCell = document.querySelector('tr');
-console.log('tableCell: ', tableCell);
+const tableBody = document.querySelector('.table__body');
 
 toggleModal.classList.remove('active');
 
-const arr = Object.values(prods).map(v => Object.values(v));
-console.log('arr: ', arr);
-const dataIdTr = tableCell[1];
-console.log('dataIdTr: ', dataIdTr);
+const createRow = ({id: iden, title, category, units, count, price}) => {
+  const tr = document.createElement('tr');
+
+  const tdID = document.createElement('td');
+  tdID.classList.add('table__cell');
+  tdID.textContent = iden;
+
+  const tdTitle = document.createElement('td');
+  tdTitle.classList.add('table__cell', 'table__cell_left', 'table__cell_name');
+  tdTitle.textContent = title;
+
+  const tdCategory = document.createElement('td');
+  tdCategory.classList.add('table__cell', 'table__cell_left');
+  tdCategory.textContent = category;
+
+  const tdUnits = document.createElement('td');
+  tdUnits.classList.add('table__cell');
+  tdUnits.textContent = units;
+
+  const tdCount = document.createElement('td');
+  tdCount.classList.add('table__cell');
+  tdCount.textContent = count;
+
+  const tdPrice = document.createElement('td');
+  tdPrice.classList.add('table__cell');
+  tdPrice.textContent = '$' + price;
+
+  const tdTotalPrice = document.createElement('td');
+  tdTotalPrice.classList.add('table__cell');
+  tdTotalPrice.textContent = '$' + price * count;
+
+  const tdButton = document.createElement('td');
+  tdButton.classList.add('table__cell', 'table__cell_btn-wrapper');
+  const btnPic = document.createElement('button');
+  btnPic.classList.add('table__btn', 'table__btn_pic');
+  const btnEdit = document.createElement('button');
+  btnEdit.classList.add('table__btn', 'table__btn_edit');
+  const btnDel = document.createElement('button');
+  btnDel.classList.add('table__btn', 'table__btn_del');
+
+  tdButton.append(btnPic, btnEdit, btnDel);
+
+  tr.append(tdID, tdTitle, tdCategory, tdUnits, tdCount, tdPrice, tdTotalPrice, tdButton);
+  tableBody.prepend(tr);
+  return tableBody;
+};
 
 
-/* const renderGoods = (arr) => {
-  const x = arr.map((arr) => console.log(arr));
-  return x;
+const renderGoods = (data) => {
+  const prods = data.map(createRow);
+  return prods;
 };
-// renderGoods(prods);
-console.log((prods));
-const createRow = () => {
-  const o = Object.values(renderGoods());
-  return o;
-};
-console.log(createRow(renderGoods(prods)));*/
+renderGoods(data);
