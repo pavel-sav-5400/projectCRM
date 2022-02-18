@@ -77,10 +77,30 @@ const mainModalTitle = document.querySelector('.modal__title');
 const mainModalForm = document.querySelector('.modal__form');
 const modalCheckBox = document.querySelector('.modal__checkbox');
 const modalInputCheckBox = document.querySelector('.modal__input_discount');
-const toggleModal = document.querySelector('.overlay');
+const mainModal = document.querySelector('.overlay');
 const tableBody = document.querySelector('.table__body');
+const btnAddGood = document.querySelector('.panel__add-goods');
+const btnCloseModal = document.querySelector('.modal__close');
+const overlayModal = document.querySelector('.modal');
 
-toggleModal.classList.toggle('active');
+mainModal.classList.remove('active');
+
+btnAddGood.addEventListener('click', () => {
+  mainModal.classList.add('active');
+});
+
+mainModal.addEventListener('click', () => {
+  mainModal.classList.remove('active');
+});
+
+overlayModal.addEventListener('click', event => {
+  event.stopPropagation();
+});
+
+btnCloseModal.addEventListener('click', () => {
+  mainModal.classList.remove('active');
+});
+
 
 const createRow = data => tableBody.insertAdjacentHTML('afterbegin',
     `<tr data-id="${data.id}">
