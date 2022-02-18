@@ -80,57 +80,24 @@ const modalInputCheckBox = document.querySelector('.modal__input_discount');
 const toggleModal = document.querySelector('.overlay');
 const tableBody = document.querySelector('.table__body');
 
-toggleModal.classList.remove('active');
+toggleModal.classList.toggle('active');
 
-const createRow = ({id: iden, title, category, units, count, price, discont}) => {
-  const tr = document.createElement('tr');
-
-  const tddiscont = discont;
-
-  const tdID = document.createElement('td');
-  tdID.classList.add('table__cell');
-  tdID.textContent = iden;
-
-  const tdTitle = document.createElement('td');
-  tdTitle.classList.add('table__cell', 'table__cell_left', 'table__cell_name');
-  tdTitle.textContent = title;
-
-  const tdCategory = document.createElement('td');
-  tdCategory.classList.add('table__cell', 'table__cell_left');
-  tdCategory.textContent = category;
-
-  const tdUnits = document.createElement('td');
-  tdUnits.classList.add('table__cell');
-  tdUnits.textContent = units;
-
-  const tdCount = document.createElement('td');
-  tdCount.classList.add('table__cell');
-  tdCount.textContent = count;
-
-  const tdPrice = document.createElement('td');
-  tdPrice.classList.add('table__cell');
-  tdPrice.textContent = '$' + price;
-
-  const tdTotalPrice = document.createElement('td');
-  tdTotalPrice.classList.add('table__cell');
-  tdTotalPrice.textContent = '$' + ((price * count) - (price * count * tddiscont / 100));
-
-  const tdButton = document.createElement('td');
-  tdButton.classList.add('table__cell', 'table__cell_btn-wrapper');
-  const btnPic = document.createElement('button');
-  btnPic.classList.add('table__btn', 'table__btn_pic');
-  const btnEdit = document.createElement('button');
-  btnEdit.classList.add('table__btn', 'table__btn_edit');
-  const btnDel = document.createElement('button');
-  btnDel.classList.add('table__btn', 'table__btn_del');
-
-  tdButton.append(btnPic, btnEdit, btnDel);
-
-  tr.append(tdID, tdTitle, tdCategory, tdUnits, tdCount, tdPrice, tdTotalPrice, tdButton);
-  tableBody.prepend(tr);
-  return tableBody;
-};
-
+const createRow = data => tableBody.insertAdjacentHTML('afterbegin',
+    `<tr data-id="${data.id}">
+    <td class="table__cell">${data.id}</td>
+    <td class="table__cell table__cell_left table__cell_name" >${data.title}</td>
+    <td class="table__cell table__cell_left">${data.category}</td>
+    <td class="table__cell">${data.units}</td>
+    <td class="table__cell">${data.count}</td>
+    <td class="table__cell">$${data.price}</td>
+    <td class="table__cell">$${(data.count * data.price) - (data.price * data.count * data.discont / 100)}</td>
+    <td class="table__cell table__cell_btn-wrapper">          
+      <button class="table__btn table__btn_pic"></button>
+      <button class="table__btn table__btn_edit"></button>
+      <button class="table__btn table__btn_del"></button>
+    </td>
+  </tr> `,
+);
 
 const renderGoods = (data) => {
   const prods = data.map(createRow);
