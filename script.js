@@ -72,7 +72,7 @@ const data =
     },
   },
 ];
-
+console.log('data: ', data);
 const mainModalTitle = document.querySelector('.modal__title');
 const mainModalForm = document.querySelector('.modal__form');
 const modalCheckBox = document.querySelector('.modal__checkbox');
@@ -80,8 +80,6 @@ const modalInputCheckBox = document.querySelector('.modal__input_discount');
 const mainModal = document.querySelector('.overlay');
 const tableBody = document.querySelector('.table__body');
 const btnAddGood = document.querySelector('.panel__add-goods');
-const btnCloseModal = document.querySelector('.modal__close');
-const overlayModal = document.querySelector('.modal');
 
 mainModal.classList.remove('active');
 
@@ -89,18 +87,19 @@ btnAddGood.addEventListener('click', () => {
   mainModal.classList.add('active');
 });
 
-mainModal.addEventListener('click', () => {
-  mainModal.classList.remove('active');
+mainModal.addEventListener('click', e => {
+  const target = e.target;
+  if (target.closest('.modal__close') || (!target.closest('.modal'))) {
+    mainModal.classList.remove('active');
+  }
 });
-
-overlayModal.addEventListener('click', event => {
-  event.stopPropagation();
+tableBody.addEventListener('click', e => {
+  const target = e.target;
+  if (target.closest('.table__btn_del')) {
+    target.closest('.table__cell').parentElement.remove();
+    console.log('data: ', data);
+  }
 });
-
-btnCloseModal.addEventListener('click', () => {
-  mainModal.classList.remove('active');
-});
-
 
 const createRow = data => tableBody.insertAdjacentHTML('afterbegin',
     `<tr data-id="${data.id}">
@@ -119,7 +118,7 @@ const createRow = data => tableBody.insertAdjacentHTML('afterbegin',
   </tr> `,
 );
 
-const renderGoods = (data) => {
+const renderGoods = data => {
   const prods = data.map(createRow);
   return prods;
 };
