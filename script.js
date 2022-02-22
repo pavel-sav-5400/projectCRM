@@ -72,7 +72,6 @@ const data =
     },
   },
 ];
-console.log('data: ', data);
 const mainModalTitle = document.querySelector('.modal__title');
 const mainModalForm = document.querySelector('.modal__form');
 const modalCheckBox = document.querySelector('.modal__checkbox');
@@ -83,9 +82,13 @@ const btnAddGood = document.querySelector('.panel__add-goods');
 
 mainModal.classList.remove('active');
 
+// кнопка добавить товар
+
 btnAddGood.addEventListener('click', () => {
   mainModal.classList.add('active');
 });
+
+// закрытие модального окна
 
 mainModal.addEventListener('click', e => {
   const target = e.target;
@@ -93,13 +96,23 @@ mainModal.addEventListener('click', e => {
     mainModal.classList.remove('active');
   }
 });
+// удаление строки и объекта
+
 tableBody.addEventListener('click', e => {
   const target = e.target;
+  const itemId = target.closest('tr').dataset.id;
+
   if (target.closest('.table__btn_del')) {
-    target.closest('.table__cell').parentElement.remove();
-    console.log('data: ', data);
+    target.closest('tr').remove();
+    data.filter(item => {
+      if (+item.id === +itemId) {
+        data.splice(data.indexOf(item), 1);
+      }
+    });
+    console.log(data);
   }
-});
+},
+);
 
 const createRow = data => tableBody.insertAdjacentHTML('afterbegin',
     `<tr data-id="${data.id}">
