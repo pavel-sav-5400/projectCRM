@@ -72,10 +72,22 @@ const data =
     },
   },
 ];
+
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+
 const mainModalTitle = document.querySelector('.modal__title');
 const mainModalForm = document.querySelector('.modal__form');
 const modalCheckBox = document.querySelector('.modal__checkbox');
 const modalInputCheckBox = document.querySelector('.modal__input_discount');
+const modalCheckBoxInput = document.querySelector('.modal__input');
+const venderCodeId = document.querySelector('.vendor-code__id');
+
+
 const mainModal = document.querySelector('.overlay');
 const tableBody = document.querySelector('.table__body');
 const btnAddGood = document.querySelector('.panel__add-goods');
@@ -86,6 +98,8 @@ mainModal.classList.remove('active');
 
 btnAddGood.addEventListener('click', () => {
   mainModal.classList.add('active');
+  venderCodeId.replaceWith(getRandomIntInclusive(1e8, 9e8));
+
 });
 
 // закрытие модального окна
