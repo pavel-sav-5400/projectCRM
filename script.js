@@ -61,7 +61,6 @@ const data = [
   },
 ];
 
-// eslint-disable-next-line require-jsdoc
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -91,32 +90,23 @@ const addNewProd = prod => data.push(prod);
 
 const getTotalPriceMain = (data) => {
   const total = data.map(data => (data.count * data.price) - (data.price * data.count * data.discount_count / 100)).reduce((a, b) => a + b);
-  console.log('total: ', total);
   return total;
 };
-
 
 const getModalPrice = () => (form.price.value * form.count.value) -
  (form.price.value * form.count.value * form.discount_count.value / 100);
 
-form.price.addEventListener('blur', () => {
-  modalTotalPrice.innerHTML = getModalPrice();
-});
+form.price.addEventListener('blur', () => modalTotalPrice.innerHTML = getModalPrice());
+form.count.addEventListener('blur', () => modalTotalPrice.innerHTML = getModalPrice());
+form.discount_count.addEventListener('blur', () => modalTotalPrice.innerHTML = getModalPrice());
 
-form.count.addEventListener('blur', () => {
-  modalTotalPrice.innerHTML = getModalPrice();
-});
-
-form.discount_count.addEventListener('blur', () => {
-  modalTotalPrice.innerHTML = getModalPrice();
-});
+const uniqId = getRandomIntInclusive(1e8, 9e8);
 
 // кнопка добавить товар
 
 btnAddGood.addEventListener('click', () => {
-  const uniqId = getRandomIntInclusive(1e8, 9e8);
   mainModal.classList.add('active');
-  vendorCodeId.innerHTML = (uniqId);
+  vendorCodeId.innerHTML = uniqId;
 });
 
 // закрытие модального окна
@@ -148,12 +138,10 @@ tableBody.addEventListener('click', e => {
 
 // чекбокс
 
-modalCheckBox.addEventListener('click', e => {
-  if (e.target.closest('.modal__checkbox')) {
-    discountCount.toggleAttribute('disabled');
-    if (discountCount.hasAttribute('disabled')) {
-      form.discount_count.replaceWith('');
-    }
+modalCheckBox.addEventListener('click', () => {
+  discountCount.toggleAttribute('disabled');
+  if (discountCount.hasAttribute('disabled')) {
+    form.discount_count.value = '';
   }
 });
 
@@ -181,12 +169,11 @@ form.addEventListener('submit', e => {
   e.preventDefault();
   const formData = new FormData(e.target);
   const newProd = Object.fromEntries(formData);
-  console.log('newProd: ', newProd);
+  newProd.id = uniqId;
+
   addNewProd(newProd);
   tableBody.append(createRow(newProd));
-  console.log(data);
   mainModal.classList.remove('active');
-  console.log('getModalPrice: ', getModalPrice());
   form.reset();
   headerTotalPrice.innerHTML = getTotalPriceMain(data);
 });
