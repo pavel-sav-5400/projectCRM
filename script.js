@@ -133,7 +133,6 @@ tableBody.addEventListener('click', e => {
         headerTotalPrice.innerHTML = getTotalPriceMain(data);
       }
     });
-    console.log(data);
   }
 },
 );
