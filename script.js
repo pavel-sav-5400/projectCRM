@@ -1,5 +1,5 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
+/* eslint-disable no-unused-vars */
 'use strict';
 
 const data = [
@@ -61,6 +61,7 @@ const data = [
   },
 ];
 
+// eslint-disable-next-line require-jsdoc
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
@@ -89,7 +90,8 @@ const addNewProd = prod => data.push(prod);
 // итоговая стоимость на странице
 
 const getTotalPriceMain = (data) => {
-  const total = data.map(data => (data.count * data.price) - (data.price * data.count * data.discount_count / 100)).reduce((a, b) => a + b);
+  const total = data.map(data => (data.count * data.price) -
+(data.price * data.count * data.discount_count / 100)).reduce(((a, b) => a + b), 0);
   return total;
 };
 
