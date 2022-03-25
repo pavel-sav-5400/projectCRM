@@ -19,3 +19,4 @@ const init = () => {
     delActiveClass,
   };
 };
+window.crm = init;
