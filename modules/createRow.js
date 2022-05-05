@@ -14,7 +14,7 @@ export const createRow = data => tableBody.insertAdjacentHTML('afterbegin',
 <td class="table__cell">$${(data.count * data.price) -
      (data.price * data.count * data.discount_count / 100)}</td>
 <td class="table__cell table__cell_btn-wrapper">          
-  <button class="table__btn table__btn_pic"></button>
+  <button class="table__btn table__btn_pic" data-pic="https://i.ucrazy.ru/files/i/2007.12.4/1196763691__26.jpg"></button>
   <button class="table__btn table__btn_edit"></button>
   <button class="table__btn table__btn_del"></button>
 </td>
