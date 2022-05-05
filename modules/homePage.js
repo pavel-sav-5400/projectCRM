@@ -4,7 +4,8 @@ import {
   mainModal,
   vendorCodeId,
   tableBody,
-  headerTotalPrice} from './getElements.js';
+  headerTotalPrice,
+} from './getElements.js';
 import {uniqId} from './getRandom.js';
 import {data} from './data.js';
 
@@ -34,3 +35,13 @@ tableBody.addEventListener('click', e => {
   }
 },
 );
+
+// кнопка изображения
+
+tableBody.addEventListener('click', e => {
+  const picUrl = e.target.closest('button').dataset.pic;
+  console.log('picUrl: ', picUrl);
+  if (e.target.closest('.table__btn_pic')) {
+    open(picUrl, 'about:blank', 'width=600,heigth=800');
+  }
+});
