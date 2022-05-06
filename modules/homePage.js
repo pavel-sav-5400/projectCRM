@@ -40,8 +40,16 @@ tableBody.addEventListener('click', e => {
 
 tableBody.addEventListener('click', e => {
   const picUrl = e.target.closest('button').dataset.pic;
-  console.log('picUrl: ', picUrl);
   if (e.target.closest('.table__btn_pic')) {
-    open(picUrl, 'about:blank', 'width=600,heigth=800');
+    open(picUrl, '',
+        `
+    width=800,
+    height=600, 
+    left=${(window.screen.width / 2 - 800 / 2)},
+    top=${(window.screen.height / 2 - 600 / 2)},
+    display=flex,
+    justifyContent=center,
+    alignItems=center
+    `);
   }
 });
